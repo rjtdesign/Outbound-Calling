@@ -1084,7 +1084,7 @@
     if (prospects && prospects.length > 0) {
       const tbody = document.querySelector('.data-table tbody');
       if (tbody) {
-        tbody.innerHTML = prospects.map((p, i) => {
+        tbody.innerHTML = prospects.filter(p => p.prospect_name && p.prospect_name.length < 50 && !p.prospect_name.includes(':')).map((p, i) => {
           const name = p.prospect_name || 'Unknown';
           const initials = getInitials(name);
           const pid = 'VLC-P' + String(i + 1).padStart(3, '0');
