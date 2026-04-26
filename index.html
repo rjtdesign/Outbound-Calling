@@ -1,0 +1,2012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valiant LifeCare — Outreach Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4F5FE;
+    --card: #FFFFFF;
+    --primary: #5B5FED;
+    --primary-dark: #4F46E5;
+    --primary-light: #EEF2FF;
+    --accent: #C5F76C;
+    --accent-dark: #84CC16;
+    --success: #10B981;
+    --success-light: #DCFCE7;
+    --warning: #F59E0B;
+    --warning-light: #FEF3C7;
+    --danger: #EF4444;
+    --danger-light: #FEE2E2;
+    --text: #1F2937;
+    --text-muted: #6B7280;
+    --text-light: #9CA3AF;
+    --border: #E5E7EB;
+    --border-light: #F3F4F6;
+    --bg-soft: #F9FAFB;
+    --brand-blue: #1E3A8A;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+    --shadow-lg: 0 8px 24px rgba(91, 95, 237, 0.12);
+    --shadow-xl: 0 16px 40px rgba(91, 95, 237, 0.16);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(91, 95, 237, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  #dots-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+  }
+
+  .display-font {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  }
+
+  .app-layout {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar {
+    width: 260px;
+    background: var(--card);
+    border-right: 1px solid var(--border);
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+    padding: 0 6px;
+  }
+
+  .brand-logo {
+    width: 28px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  .brand-text {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: 0.5px;
+    line-height: 1;
+  }
+
+  .brand-sub {
+    font-size: 9px;
+    color: var(--primary);
+    letter-spacing: 2.5px;
+    margin-top: 2px;
+    font-weight: 600;
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 12px;
+    color: var(--text-muted);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .nav-item:hover {
+    background: var(--bg-soft);
+    color: var(--text);
+  }
+
+  .nav-item.active {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(91, 95, 237, 0.3);
+  }
+
+  .nav-item.active:hover {
+    background: var(--primary-dark);
+    color: #fff;
+  }
+
+  .nav-item svg { flex-shrink: 0; }
+
+  /* ============ DR SARAH SIDEBAR CARD ============ */
+  .dr-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 16px;
+    margin-top: auto;
+  }
+
+  .dr-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .live-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .live-dot {
+    width: 7px;
+    height: 7px;
+    background: var(--success);
+    border-radius: 50%;
+    animation: livePulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes livePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  }
+
+  .live-text {
+    font-size: 9px;
+    color: var(--success);
+    font-weight: 700;
+    letter-spacing: 0.6px;
+  }
+
+  .live-time {
+    font-size: 9px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .dr-stage {
+    position: relative;
+    height: 240px;
+    background: linear-gradient(135deg, var(--brand-blue) 0%, var(--primary) 100%);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .orbit-1, .orbit-2 {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .orbit-1 {
+    inset: 14px;
+    border: 1px solid rgba(197, 247, 108, 0.2);
+    animation: spinSlow 25s linear infinite;
+  }
+
+  .orbit-2 {
+    inset: 26px;
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    animation: spinSlow 18s linear infinite reverse;
+  }
+
+  @keyframes spinSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .doctor-img {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 200px;
+    height: 240px;
+    transform: translateX(-50%);
+    animation: drBob 4s ease-in-out infinite;
+    z-index: 5;
+  }
+
+  @keyframes drBob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-6px); }
+  }
+
+  .doctor-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: bottom center;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.25));
+  }
+
+  .float-icon {
+    position: absolute;
+    z-index: 4;
+  }
+
+  .float-icon.f-clock { top: 12px; left: 10px; animation: fl-a 3.5s ease-in-out infinite; }
+  .float-icon.f-cross { top: 12px; right: 10px; animation: fl-b 3s ease-in-out infinite; }
+  .float-icon.f-heart { top: 90px; left: 6px; animation: fl-c 2.5s ease-in-out infinite; }
+  .float-icon.f-shield { top: 90px; right: 6px; animation: fl-d 4s ease-in-out infinite; }
+
+  @keyframes fl-a { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-5px) rotate(8deg); } }
+  @keyframes fl-b { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-6px) rotate(-8deg); } }
+  @keyframes fl-c { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-4px) scale(1.15); } }
+  @keyframes fl-d { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-4px) rotate(5deg); } }
+
+  .sparkle {
+    position: absolute;
+    border-radius: 50%;
+    animation: spkPulse 2s ease-in-out infinite;
+    z-index: 3;
+  }
+
+  @keyframes spkPulse {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  .dr-name-block {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .dr-name-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .dr-name {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .ai-pill {
+    padding: 2px 8px;
+    background: linear-gradient(135deg, var(--primary), #8B5CF6);
+    border-radius: 8px;
+    font-size: 9px;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .dr-role {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+
+  .calling-card {
+    background: linear-gradient(135deg, #F0FDF4, #ECFDF5);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 12px;
+    padding: 11px;
+    margin-bottom: 10px;
+  }
+
+  .calling-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+
+  .calling-label {
+    font-size: 9px;
+    color: var(--success);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .calling-time {
+    font-size: 9px;
+    color: var(--success);
+  }
+
+  .calling-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .calling-meta {
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .ecg-mini {
+    margin-top: 7px;
+  }
+
+  .ecg-path {
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: ecgDraw 2.5s linear infinite;
+    filter: drop-shadow(0 0 2px var(--success));
+  }
+
+  @keyframes ecgDraw {
+    0% { stroke-dashoffset: 600; }
+    100% { stroke-dashoffset: 0; }
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .stat-mini {
+    text-align: center;
+    padding: 7px 4px;
+    background: var(--bg-soft);
+    border-radius: 8px;
+  }
+
+  .stat-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .stat-num.purple { color: var(--primary); }
+  .stat-num.green { color: var(--success); }
+  .stat-num.dark { color: var(--text); }
+
+  .stat-mini-label {
+    font-size: 8px;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+
+  /* ============ MAIN CONTENT ============ */
+  .main {
+    flex: 1;
+    padding: 24px 28px;
+    min-width: 0;
+  }
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .page-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .page-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 12px;
+    width: 240px;
+    transition: all 0.2s;
+  }
+
+  .search-box:hover, .search-box:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(91, 95, 237, 0.08);
+  }
+
+  .search-box input {
+    flex: 1;
+    border: 0;
+    outline: 0;
+    font-size: 12px;
+    background: transparent;
+    color: var(--text);
+    font-family: inherit;
+  }
+
+  .search-box input::placeholder { color: var(--text-light); }
+
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+  }
+
+  .icon-btn:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+  }
+
+  .icon-btn .badge-dot {
+    position: absolute;
+    top: 6px;
+    right: 7px;
+    width: 7px;
+    height: 7px;
+    background: var(--danger);
+    border-radius: 50%;
+    border: 2px solid var(--card);
+  }
+
+  .user-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 12px 5px 5px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .user-card:hover { border-color: var(--primary); }
+
+  .user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), #8B5CF6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .user-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .user-role {
+    font-size: 10px;
+    color: var(--text-muted);
+  }
+
+  /* ============ METRIC CARDS ============ */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  .metric-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .metric-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(91, 95, 237, 0) 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .metric-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary);
+  }
+
+  .metric-card:hover::before { opacity: 1; }
+
+  .metric-card.featured {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(91, 95, 237, 0.3);
+    border: 0;
+  }
+
+  .metric-card.featured:hover {
+    box-shadow: 0 16px 36px rgba(91, 95, 237, 0.4);
+  }
+
+  .metric-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 14px;
+  }
+
+  .metric-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .metric-card.featured .metric-label {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .metric-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .metric-card.featured .metric-icon {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .metric-icon.indigo { background: var(--primary-light); color: var(--primary); }
+  .metric-icon.green { background: var(--success-light); color: var(--success); }
+  .metric-icon.amber { background: var(--warning-light); color: var(--warning); }
+
+  .metric-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .metric-card.featured .metric-num { color: #fff; }
+
+  .metric-trend {
+    font-size: 12px;
+    margin-top: 8px;
+    font-weight: 500;
+  }
+
+  .metric-trend.up { color: var(--success); }
+  .metric-trend.down { color: var(--warning); }
+
+  .metric-card.featured .metric-trend.up {
+    color: var(--accent);
+  }
+
+  .metric-trend span {
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .metric-card.featured .metric-trend span {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  /* ============ TODAY's CALLS / PENDING / HEALTH ============ */
+  .row-3 {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  .panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .panel-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .panel-action {
+    font-size: 14px;
+    color: var(--text-light);
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  /* Calendar strip */
+  .cal-strip {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+
+  .cal-arrow {
+    width: 24px;
+    text-align: center;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .cal-days {
+    flex: 1;
+    display: flex;
+    gap: 4px;
+  }
+
+  .cal-day {
+    flex: 1;
+    padding: 9px 4px;
+    text-align: center;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .cal-day:hover {
+    background: var(--primary-light);
+  }
+
+  .cal-day-name {
+    font-size: 9px;
+    color: var(--text-muted);
+  }
+
+  .cal-day-num {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-top: 3px;
+  }
+
+  .cal-day.active {
+    background: var(--primary);
+    color: #fff;
+    animation: calBounce 1.5s ease-in-out infinite;
+  }
+
+  .cal-day.active .cal-day-name,
+  .cal-day.active .cal-day-num { color: #fff; }
+
+  .cal-day.active .cal-day-name { opacity: 0.9; }
+
+  .cal-day.has-booking::after {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin: 3px auto 0;
+  }
+
+  @keyframes calBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  /* Triggered bounce when booking */
+  .booking-celebrate {
+    animation: celebrateBnc 0.8s ease-out;
+  }
+
+  @keyframes celebrateBnc {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.08) rotate(-3deg); }
+    50% { transform: scale(0.96) rotate(3deg); }
+    75% { transform: scale(1.04) rotate(-1deg); }
+    100% { transform: scale(1); }
+  }
+
+  /* Patient rows in today's calls */
+  .calls-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .call-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .call-row:hover { background: var(--bg-soft); }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .avatar.av-1 { background: linear-gradient(135deg, #FCA5A5, #F87171); }
+  .avatar.av-2 { background: linear-gradient(135deg, #93C5FD, #3B82F6); }
+  .avatar.av-3 { background: linear-gradient(135deg, #C5F76C, #84CC16); color: var(--text); }
+  .avatar.av-4 { background: linear-gradient(135deg, #DDD6FE, #8B5CF6); }
+  .avatar.av-5 { background: linear-gradient(135deg, #FBBF24, #F59E0B); }
+  .avatar.av-6 { background: linear-gradient(135deg, #67E8F9, #06B6D4); }
+
+  .call-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .call-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .call-name .doctor-inline {
+    color: var(--text-light);
+    font-weight: 400;
+  }
+
+  .call-meta {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .call-time {
+    font-size: 11px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .call-status {
+    font-size: 10px;
+    margin-top: 2px;
+    font-weight: 500;
+  }
+
+  .call-status.completed { color: var(--success); }
+  .call-status.pending { color: var(--warning); }
+  .call-status.cancelled { color: var(--text-light); }
+
+  .call-row.is-pending { background: #FFFBEB; }
+
+  /* Pending Card */
+  .pending-card {
+    background: var(--bg-soft);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 8px;
+    transition: all 0.2s;
+  }
+
+  .pending-card.featured {
+    background: var(--card);
+    border: 2px solid var(--primary);
+  }
+
+  .pending-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .pending-info { flex: 1; min-width: 0; }
+
+  .pending-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .pending-doc {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+
+  .pending-time {
+    font-size: 10px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  .pending-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+
+  .pending-actions {
+    display: flex;
+    gap: 6px;
+  }
+
+  .btn-reject, .btn-accept {
+    flex: 1;
+    padding: 6px;
+    border-radius: 8px;
+    font-size: 11px;
+    cursor: pointer;
+    border: 0;
+    font-weight: 600;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .btn-reject {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  .btn-reject:hover { background: var(--bg-soft); }
+
+  .btn-accept {
+    background: var(--primary);
+    color: #fff;
+  }
+
+  .btn-accept:hover { background: var(--primary-dark); }
+
+  /* RCM Health Score Card */
+  .health-card {
+    background: linear-gradient(135deg, #fff, #F0FDF4);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid #BBF7D0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .health-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .health-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .heart-pulse {
+    animation: heartPulse 1.2s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  @keyframes heartPulse {
+    0%, 100% { transform: scale(1); }
+    25%, 75% { transform: scale(1.15); }
+    50% { transform: scale(1); }
+  }
+
+  .health-badge {
+    font-size: 10px;
+    color: var(--success);
+    padding: 3px 10px;
+    background: var(--success-light);
+    border-radius: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .health-ecg {
+    margin: 12px 0;
+  }
+
+  .health-ecg path {
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: ecgDraw 3s linear infinite;
+    filter: drop-shadow(0 0 3px var(--success));
+  }
+
+  .health-score-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+  }
+
+  .health-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--success);
+    line-height: 1;
+  }
+
+  .health-num span {
+    font-size: 14px;
+    opacity: 0.6;
+    font-weight: 600;
+  }
+
+  .health-num-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .health-stats {
+    display: flex;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(16, 185, 129, 0.15);
+  }
+
+  .health-stat {
+    flex: 1;
+    text-align: center;
+  }
+
+  .health-stat-num {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .health-stat-lbl {
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .health-divider {
+    width: 1px;
+    background: rgba(16, 185, 129, 0.15);
+  }
+
+  /* ============ PATIENT TABLE ============ */
+  .table-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  .table-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+
+  .table-title-block {}
+
+  .table-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn {
+    padding: 9px 14px;
+    border-radius: 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--bg-soft);
+    color: var(--text);
+    font-weight: 500;
+    transition: all 0.2s;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+  }
+
+  .btn.btn-primary {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+  }
+
+  .btn.btn-primary:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .data-table thead tr {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .data-table th {
+    text-align: left;
+    padding: 12px 10px;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 11px;
+    cursor: pointer;
+  }
+
+  .data-table th:hover { color: var(--primary); }
+
+  .data-table tbody tr {
+    border-bottom: 1px solid var(--border-light);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .data-table tbody tr:hover {
+    background: var(--bg-soft);
+  }
+
+  .data-table tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  .data-table td {
+    padding: 14px 10px;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .id-cell {
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .date-cell-time {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .name-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .name-cell .avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 11px;
+  }
+
+  .name-cell-text {
+    font-weight: 500;
+  }
+
+  .doc-cell { color: var(--text-muted); }
+
+  .type-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .type-dot::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-light);
+  }
+
+  .type-dot.red::before { background: #F87171; }
+  .type-dot.purple::before { background: #8B5CF6; }
+  .type-dot.indigo::before { background: var(--primary); }
+  .type-dot.dark::before { background: var(--text); }
+
+  .status-pill {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .status-pill.completed {
+    background: var(--text);
+    color: #fff;
+  }
+
+  .status-pill.ongoing {
+    background: #DDD6FE;
+    color: #5B21B6;
+  }
+
+  .status-pill.pending {
+    background: var(--danger-light);
+    color: #991B1B;
+  }
+
+  .status-pill.booked {
+    background: var(--success-light);
+    color: #166534;
+  }
+
+  .status-pill.dnc {
+    background: var(--text);
+    color: var(--danger);
+  }
+
+  .table-hint {
+    margin-top: 16px;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--primary-light), #F0FDF4);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--primary);
+  }
+
+  /* ============ TOAST ============ */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--success);
+    padding: 14px 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1000;
+    transform: translateX(400px);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .toast.show { transform: translateX(0); }
+
+  .toast-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--success-light);
+    color: var(--success);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .toast-msg {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .toast-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1280px) {
+    .row-3 {
+      grid-template-columns: 1fr 1fr;
+    }
+    .health-card-wrapper {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 980px) {
+    .metrics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .row-3 {
+      grid-template-columns: 1fr;
+    }
+    .health-card-wrapper {
+      grid-column: auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      display: none;
+    }
+    .main {
+      padding: 16px;
+    }
+    .topbar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+    .topbar-right {
+      flex-wrap: wrap;
+    }
+    .search-box {
+      width: 100%;
+    }
+    .metrics-grid {
+      grid-template-columns: 1fr;
+    }
+    .data-table {
+      font-size: 12px;
+    }
+    .data-table td {
+      padding: 10px 6px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="dots-bg"></canvas>
+
+<div class="app-layout">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <svg class="brand-logo" viewBox="0 0 32 36" fill="none">
+        <path d="M2 4 L16 32 L30 4 L24 4 L16 22 L8 4 Z" fill="#5B5FED"/>
+      </svg>
+      <div>
+        <div class="brand-text">VALIANT</div>
+        <div class="brand-sub">LIFECARE</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="#" class="nav-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="nav-item active">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.58l2.2-2.21c.28-.27.36-.66.25-1.01C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+        <span>Outreach Calls</span>
+      </a>
+      <a href="#" class="nav-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        <span>Patients</span>
+      </a>
+      <a href="#" class="nav-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 8h-2V3H7v5H5c-1.1 0-2 .9-2 2v6h4v5h10v-5h4v-6c0-1.1-.9-2-2-2zM9 5h6v3H9V5zm6 14H9v-4h6v4zm4-6H5v-3h14v3z"/></svg>
+        <span>Doctors</span>
+      </a>
+      <a href="#" class="nav-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 21H2V3h2v16h2v-9h4v9h2V6h4v13h2v-7h4v9z"/></svg>
+        <span>Reports</span>
+      </a>
+      <a href="#" class="nav-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/></svg>
+        <span>Calendar</span>
+      </a>
+    </nav>
+
+    <!-- Dr. Sarah AI Card -->
+    <div class="dr-card">
+      <div class="dr-header">
+        <div class="live-badge">
+          <div class="live-dot"></div>
+          <span class="live-text">LIVE • AI ENGINE</span>
+        </div>
+        <div class="live-time" id="live-clock">14:32:47</div>
+      </div>
+
+      <div class="dr-stage">
+        <div class="orbit-1"></div>
+        <div class="orbit-2"></div>
+
+        <div class="doctor-img">
+          <img src="dr-sarah.png" alt="Dr. Sarah AI">
+        </div>
+
+        <div class="float-icon f-clock">
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.95)"/>
+            <circle cx="12" cy="12" r="10" fill="none" stroke="#67E8F9" stroke-width="1.5"/>
+            <line x1="12" y1="12" x2="12" y2="7" stroke="#1E3A8A" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="12" y1="12" x2="15" y2="14" stroke="#1E3A8A" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="float-icon f-cross">
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" fill="rgba(252, 165, 165, 0.95)"/>
+            <path d="M 12 6 L 12 18 M 6 12 L 18 12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="float-icon f-heart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#FCA5A5">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+
+        <div class="float-icon f-shield">
+          <svg width="20" height="20" viewBox="0 0 24 24">
+            <path d="M12 1 L21 5 L21 11 C 21 16.5 17 21 12 23 C 7 21 3 16.5 3 11 L 3 5 Z" fill="#67E8F9"/>
+            <path d="M 8 12 L 11 15 L 16 9" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <div class="sparkle" style="top: 50px; left: 50px; width: 4px; height: 4px; background: #C5F76C; box-shadow: 0 0 6px #C5F76C; animation-delay: 0s;"></div>
+        <div class="sparkle" style="top: 70px; right: 50px; width: 3px; height: 3px; background: #fff; box-shadow: 0 0 4px #fff; animation-delay: 0.5s;"></div>
+        <div class="sparkle" style="bottom: 100px; left: 24px; width: 3px; height: 3px; background: #67E8F9; box-shadow: 0 0 5px #67E8F9; animation-delay: 1s;"></div>
+        <div class="sparkle" style="bottom: 60px; right: 40px; width: 4px; height: 4px; background: #C5F76C; box-shadow: 0 0 6px #C5F76C; animation-delay: 1.5s;"></div>
+      </div>
+
+      <div class="dr-name-block">
+        <div class="dr-name-line">
+          <div class="dr-name">Dr. Sarah</div>
+          <div class="ai-pill">AI</div>
+        </div>
+        <div class="dr-role">Healthcare RCM Specialist</div>
+      </div>
+
+      <div class="calling-card">
+        <div class="calling-row">
+          <div class="calling-label">CURRENTLY CALLING</div>
+          <div class="calling-time" id="call-timer">02:14</div>
+        </div>
+        <div class="calling-name">Liam Thompson</div>
+        <div class="calling-meta">Acme Health Group · NYC</div>
+        <div class="ecg-mini">
+          <svg width="100%" height="20" viewBox="0 0 240 20" preserveAspectRatio="none">
+            <path class="ecg-path" d="M 0 10 L 40 10 L 50 4 L 60 16 L 70 2 L 80 18 L 90 10 L 130 10 L 140 4 L 150 16 L 160 2 L 170 18 L 180 10 L 240 10" stroke="#10B981" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-mini">
+          <div class="stat-num purple" data-counter="47">0</div>
+          <div class="stat-mini-label">Calls</div>
+        </div>
+        <div class="stat-mini">
+          <div class="stat-num green" data-counter="12">0</div>
+          <div class="stat-mini-label">Booked</div>
+        </div>
+        <div class="stat-mini">
+          <div class="stat-num dark" data-counter="26" data-suffix="%">0%</div>
+          <div class="stat-mini-label">Convert</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main class="main">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div>
+        <div class="page-title">Outreach Calls</div>
+        <div class="page-sub">Healthcare RCM Patient Engagement</div>
+      </div>
+      <div class="topbar-right">
+        <div class="search-box">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#9CA3AF"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <input placeholder="Search anything...">
+        </div>
+        <div class="icon-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#6B7280"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+        </div>
+        <div class="icon-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#6B7280"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+          <div class="badge-dot"></div>
+        </div>
+        <div class="user-card">
+          <div class="user-avatar">RB</div>
+          <div>
+            <div class="user-name">Rajat Bhasin</div>
+            <div class="user-role">Admin</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metric Cards -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-head">
+          <div class="metric-label">Total Outreach</div>
+          <div class="metric-icon indigo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.58l2.2-2.21c.28-.27.36-.66.25-1.01C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+          </div>
+        </div>
+        <div class="metric-num" data-counter="1247">0</div>
+        <div class="metric-trend up">↗ +12.3% <span>from last week</span></div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-head">
+          <div class="metric-label">Connected</div>
+          <div class="metric-icon green">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          </div>
+        </div>
+        <div class="metric-num" data-counter="892">0</div>
+        <div class="metric-trend up">↗ +4.56% <span>pickup rate</span></div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-head">
+          <div class="metric-label">Pending</div>
+          <div class="metric-icon amber">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+          </div>
+        </div>
+        <div class="metric-num" data-counter="153">0</div>
+        <div class="metric-trend down">↘ -0.78% <span>from last week</span></div>
+      </div>
+
+      <div class="metric-card featured">
+        <div class="metric-head">
+          <div class="metric-label">Booked</div>
+          <div class="metric-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10z"/></svg>
+          </div>
+        </div>
+        <div class="metric-num" data-counter="103">0</div>
+        <div class="metric-trend up">↗ +14 <span>last hour</span></div>
+      </div>
+    </div>
+
+    <!-- Today's Calls / Pending / Health Score -->
+    <div class="row-3">
+      <!-- Today's Calls -->
+      <div class="panel" id="cal-panel">
+        <div class="panel-head">
+          <div class="panel-title">Today's Calls</div>
+          <div class="panel-action">⋯</div>
+        </div>
+
+        <div class="cal-strip">
+          <div class="cal-arrow">‹</div>
+          <div class="cal-days">
+            <div class="cal-day"><div class="cal-day-name">Mon</div><div class="cal-day-num">19</div></div>
+            <div class="cal-day"><div class="cal-day-name">Tue</div><div class="cal-day-num">20</div></div>
+            <div class="cal-day has-booking"><div class="cal-day-name">Wed</div><div class="cal-day-num">21</div></div>
+            <div class="cal-day"><div class="cal-day-name">Thu</div><div class="cal-day-num">22</div></div>
+            <div class="cal-day"><div class="cal-day-name">Fri</div><div class="cal-day-num">23</div></div>
+            <div class="cal-day has-booking"><div class="cal-day-name">Sat</div><div class="cal-day-num">24</div></div>
+            <div class="cal-day active" id="today-day"><div class="cal-day-name">Sun</div><div class="cal-day-num">25</div></div>
+          </div>
+          <div class="cal-arrow">›</div>
+        </div>
+
+        <div class="calls-list">
+          <div class="call-row">
+            <div class="avatar av-1">AR</div>
+            <div class="call-info">
+              <div class="call-name">Amanda Richards <span class="doctor-inline">- Dr. Paul Carter</span></div>
+            </div>
+            <div class="call-meta">
+              <div class="call-time">09:00 AM</div>
+              <div class="call-status completed">Completed</div>
+            </div>
+          </div>
+          <div class="call-row">
+            <div class="avatar av-2">JD</div>
+            <div class="call-info">
+              <div class="call-name">Javier Davidson <span class="doctor-inline">- Dr. Bella Stevens</span></div>
+            </div>
+            <div class="call-meta">
+              <div class="call-time">11:30 AM</div>
+              <div class="call-status completed">Completed</div>
+            </div>
+          </div>
+          <div class="call-row is-pending">
+            <div class="avatar av-3">LT</div>
+            <div class="call-info">
+              <div class="call-name">Liam Thompson <span class="doctor-inline">- Dr. Laurent Blake</span></div>
+            </div>
+            <div class="call-meta">
+              <div class="call-time">01:45 PM</div>
+              <div class="call-status pending">Pending</div>
+            </div>
+          </div>
+          <div class="call-row">
+            <div class="avatar av-4">OM</div>
+            <div class="call-info">
+              <div class="call-name">Olivia Martinez <span class="doctor-inline">- Dr. Gemma O'Connor</span></div>
+            </div>
+            <div class="call-meta">
+              <div class="call-time">03:00 PM</div>
+              <div class="call-status cancelled">Cancelled</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending Outreach -->
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">Pending</div>
+          <div class="panel-action">⋯</div>
+        </div>
+
+        <div class="pending-card featured">
+          <div class="pending-row">
+            <div class="avatar av-3" style="width: 32px; height: 32px; font-size: 11px;">LT</div>
+            <div class="pending-info">
+              <div class="pending-name">Liam Thompson</div>
+              <div class="pending-doc">Dr. Laurent Blake</div>
+            </div>
+          </div>
+          <div class="pending-meta">
+            <span>Family Counseling</span>
+            <span>2026-01-25 · 01:45 PM</span>
+          </div>
+          <div class="pending-actions">
+            <button class="btn-reject">Reject</button>
+            <button class="btn-accept" onclick="bookAppointment()">Accept</button>
+          </div>
+        </div>
+
+        <div class="pending-card">
+          <div class="pending-row">
+            <div class="avatar av-1" style="width: 28px; height: 28px; font-size: 10px;">RS</div>
+            <div class="pending-info">
+              <div class="pending-name">Robert Smith</div>
+              <div class="pending-doc">Dr. Laura Mitchell</div>
+            </div>
+            <div class="pending-time">10:30 AM</div>
+          </div>
+        </div>
+
+        <div class="pending-card">
+          <div class="pending-row">
+            <div class="avatar av-3" style="width: 28px; height: 28px; font-size: 10px;">JA</div>
+            <div class="pending-info">
+              <div class="pending-name">Jessica Adams</div>
+              <div class="pending-doc">Dr. Mark Peterson</div>
+            </div>
+            <div class="pending-time">12:00 PM</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RCM Health Score -->
+      <div class="health-card-wrapper">
+        <div class="health-card">
+          <div class="health-head">
+            <div class="health-title">
+              <svg class="heart-pulse" width="16" height="16" viewBox="0 0 24 24" fill="#10B981"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              RCM Health
+            </div>
+            <div class="health-badge">● Healthy</div>
+          </div>
+          <div class="health-ecg">
+            <svg width="100%" height="44" viewBox="0 0 240 44" preserveAspectRatio="none">
+              <path d="M 0 22 L 40 22 L 50 12 L 60 32 L 70 6 L 80 38 L 90 22 L 130 22 L 140 12 L 150 32 L 160 6 L 170 38 L 180 22 L 240 22" stroke="#10B981" stroke-width="2" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="health-score-row">
+            <div>
+              <div class="health-num" data-counter="98">0<span>/100</span></div>
+              <div class="health-num-sub">System Health Score</div>
+            </div>
+          </div>
+          <div class="health-stats">
+            <div class="health-stat">
+              <div class="health-stat-num">99.6%</div>
+              <div class="health-stat-lbl">Uptime</div>
+            </div>
+            <div class="health-divider"></div>
+            <div class="health-stat">
+              <div class="health-stat-num">2.1s</div>
+              <div class="health-stat-lbl">Avg Latency</div>
+            </div>
+            <div class="health-divider"></div>
+            <div class="health-stat">
+              <div class="health-stat-num">0</div>
+              <div class="health-stat-lbl">Alerts</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Patient Records Table -->
+    <div class="table-panel">
+      <div class="table-head">
+        <div class="table-title-block">
+          <div class="panel-title">Patient Records</div>
+          <div class="page-sub">Click any row to view full call history with transcript & recording</div>
+        </div>
+        <div class="table-actions">
+          <button class="btn">📅 This Week ▾</button>
+          <button class="btn">Sort: Patient ▾</button>
+          <button class="btn btn-primary">+ Add New</button>
+        </div>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Patient ID ⇅</th>
+            <th>Date ⇅</th>
+            <th>Patient Name ⇅</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Doctor ⇅</th>
+            <th>Appoint For</th>
+            <th>Type</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr onclick="openPatient('VLC-P001')">
+            <td class="id-cell">VLC-P001</td>
+            <td>2026-01-25<div class="date-cell-time">03:00 PM</div></td>
+            <td>
+              <div class="name-cell">
+                <div class="avatar av-4">OM</div>
+                <span class="name-cell-text">Olivia Martinez</span>
+              </div>
+            </td>
+            <td>32</td>
+            <td>Female</td>
+            <td class="doc-cell">Dr. Gemma O'Connor</td>
+            <td>Couples Counseling</td>
+            <td><span class="type-dot red">Couples Counseling</span></td>
+            <td><span class="status-pill completed">Completed</span></td>
+          </tr>
+          <tr onclick="openPatient('VLC-P002')">
+            <td class="id-cell">VLC-P002</td>
+            <td>2026-01-25<div class="date-cell-time">02:30 PM</div></td>
+            <td>
+              <div class="name-cell">
+                <div class="avatar av-1">SB</div>
+                <span class="name-cell-text">Samantha Brown</span>
+              </div>
+            </td>
+            <td>28</td>
+            <td>Female</td>
+            <td class="doc-cell">Dr. Gemma O'Connor</td>
+            <td>Cognitive Behavioral</td>
+            <td><span class="type-dot dark">Individual Counseling</span></td>
+            <td><span class="status-pill ongoing">Ongoing</span></td>
+          </tr>
+          <tr onclick="openPatient('VLC-P003')">
+            <td class="id-cell">VLC-P003</td>
+            <td>2026-01-25<div class="date-cell-time">01:45 PM</div></td>
+            <td>
+              <div class="name-cell">
+                <div class="avatar av-3">LT</div>
+                <span class="name-cell-text">Liam Thompson</span>
+              </div>
+            </td>
+            <td>40</td>
+            <td>Male</td>
+            <td class="doc-cell">Dr. Laurent Blake</td>
+            <td>Family Counseling</td>
+            <td><span class="type-dot">Family Counseling</span></td>
+            <td><span class="status-pill pending">Pending</span></td>
+          </tr>
+          <tr onclick="openPatient('VLC-P004')">
+            <td class="id-cell">VLC-P004</td>
+            <td>2026-01-25<div class="date-cell-time">11:30 AM</div></td>
+            <td>
+              <div class="name-cell">
+                <div class="avatar av-2">JD</div>
+                <span class="name-cell-text">Javier Davidson</span>
+              </div>
+            </td>
+            <td>34</td>
+            <td>Male</td>
+            <td class="doc-cell">Dr. Bella Stevens</td>
+            <td>Depression Treatment</td>
+            <td><span class="type-dot purple">Psychiatric Counseling</span></td>
+            <td><span class="status-pill completed">Completed</span></td>
+          </tr>
+          <tr onclick="openPatient('VLC-P005')">
+            <td class="id-cell">VLC-P005</td>
+            <td>2026-01-25<div class="date-cell-time">09:00 AM</div></td>
+            <td>
+              <div class="name-cell">
+                <div class="avatar av-5">AR</div>
+                <span class="name-cell-text">Amanda Richards</span>
+              </div>
+            </td>
+            <td>25</td>
+            <td>Female</td>
+            <td class="doc-cell">Dr. Paul Carter</td>
+            <td>Anxiety Management</td>
+            <td><span class="type-dot dark">Individual Counseling</span></td>
+            <td><span class="status-pill completed">Completed</span></td>
+          </tr>
+          <tr onclick="openPatient('VLC-P006')">
+            <td class="id-cell">VLC-P006</td>
+            <td>2026-01-23<div class="date-cell-time">02:00 PM</div></td>
+            <td>
+              <div class="name-cell">
+                <div class="avatar av-6">AW</div>
+                <span class="name-cell-text">Anna Williams</span>
+              </div>
+            </td>
+            <td>45</td>
+            <td>Female</td>
+            <td class="doc-cell">Dr. Laurent Blake</td>
+            <td>Family Counseling</td>
+            <td><span class="type-dot">Family Counseling</span></td>
+            <td><span class="status-pill pending">Pending</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="table-hint">
+        💡 <strong>Click any row above</strong> to view full call history with audio recording, transcript & AI insights
+      </div>
+    </div>
+
+  </main>
+
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast">
+  <div class="toast-icon">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+  </div>
+  <div>
+    <div class="toast-msg">Appointment Booked!</div>
+    <div class="toast-sub">Liam Thompson confirmed for Jan 25, 03:00 PM</div>
+  </div>
+</div>
+
+<script>
+  // ============ ANIMATED COUNTERS ============
+  function animateCounter(el) {
+    const target = parseFloat(el.dataset.counter);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1500;
+    const start = performance.now();
+    const startVal = 0;
+
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = startVal + (target - startVal) * eased;
+
+      if (suffix === '%') {
+        el.textContent = Math.floor(current) + '%';
+      } else if (el.innerHTML.includes('<span>')) {
+        el.innerHTML = Math.floor(current).toLocaleString() + '<span>/100</span>';
+      } else {
+        el.textContent = Math.floor(current).toLocaleString();
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        if (suffix === '%') el.textContent = target + '%';
+        else if (el.innerHTML.includes('<span>')) el.innerHTML = target + '<span>/100</span>';
+        else el.textContent = target.toLocaleString();
+      }
+    }
+    requestAnimationFrame(update);
+  }
+
+  // Trigger counters on page load with stagger
+  document.querySelectorAll('[data-counter]').forEach((el, idx) => {
+    setTimeout(() => animateCounter(el), idx * 80);
+  });
+
+  // ============ LIVE CLOCK ============
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    const el = document.getElementById('live-clock');
+    if (el) el.textContent = `${h}:${m}:${s}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // ============ CALL TIMER ============
+  let callSeconds = 134; // start at 2:14
+  function updateCallTimer() {
+    callSeconds++;
+    const m = Math.floor(callSeconds / 60);
+    const s = callSeconds % 60;
+    const el = document.getElementById('call-timer');
+    if (el) el.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
+  setInterval(updateCallTimer, 1000);
+
+  // ============ DOTS BACKGROUND ============
+  (function() {
+    const canvas = document.getElementById('dots-bg');
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const dots = [];
+    for (let i = 0; i < 60; i++) {
+      dots.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.4 + 0.4,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        o: Math.random() * 0.4 + 0.1
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      dots.forEach(d => {
+        d.x += d.vx;
+        d.y += d.vy;
+        if (d.x < 0 || d.x > canvas.width) d.vx *= -1;
+        if (d.y < 0 || d.y > canvas.height) d.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(91, 95, 237, ${d.o})`;
+        ctx.fill();
+      });
+
+      // Connect close dots
+      dots.forEach((d1, i) => {
+        dots.slice(i + 1).forEach(d2 => {
+          const dx = d1.x - d2.x, dy = d1.y - d2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.moveTo(d1.x, d1.y);
+            ctx.lineTo(d2.x, d2.y);
+            ctx.strokeStyle = `rgba(91, 95, 237, ${0.08 * (1 - dist / 100)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        });
+      });
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+  })();
+
+  // ============ BOOKING ANIMATION ============
+  function bookAppointment() {
+    // Bounce calendar
+    const calPanel = document.getElementById('cal-panel');
+    calPanel.classList.remove('booking-celebrate');
+    void calPanel.offsetWidth;
+    calPanel.classList.add('booking-celebrate');
+
+    // Show toast
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  // ============ PATIENT DETAIL NAVIGATION ============
+  function openPatient(id) {
+    window.location.href = `patient-detail.html?id=${id}`;
+  }
+
+  // ============ NAV CLICK ============
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

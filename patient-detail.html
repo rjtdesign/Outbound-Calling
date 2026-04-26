@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patient Detail — Valiant LifeCare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4F5FE;
+    --card: #FFFFFF;
+    --primary: #5B5FED;
+    --primary-dark: #4F46E5;
+    --primary-light: #EEF2FF;
+    --accent: #C5F76C;
+    --success: #10B981;
+    --success-light: #DCFCE7;
+    --warning: #F59E0B;
+    --warning-light: #FEF3C7;
+    --danger: #EF4444;
+    --danger-light: #FEE2E2;
+    --text: #1F2937;
+    --text-muted: #6B7280;
+    --text-light: #9CA3AF;
+    --border: #E5E7EB;
+    --border-light: #F3F4F6;
+    --bg-soft: #F9FAFB;
+    --brand-blue: #1E3A8A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(91, 95, 237, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .display-font {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .nav-back {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .back-btn {
+    padding: 9px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 12px;
+    cursor: pointer;
+    color: var(--text);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .back-btn:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary);
+  }
+
+  .breadcrumb {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .breadcrumb a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  /* Hero Profile */
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border-radius: 20px;
+    padding: 28px;
+    color: #fff;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(91, 95, 237, 0.25);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    right: -50px;
+    top: -50px;
+    width: 220px;
+    height: 220px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    right: -100px;
+    bottom: -100px;
+    width: 280px;
+    height: 280px;
+    background: rgba(197, 247, 108, 0.08);
+    border-radius: 50%;
+  }
+
+  .hero-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #84CC16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    flex-shrink: 0;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .hero-info { flex: 1; min-width: 0; }
+
+  .hero-name {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .hero-meta {
+    font-size: 13px;
+    opacity: 0.9;
+    margin-top: 6px;
+  }
+
+  .hero-contact {
+    display: flex;
+    gap: 18px;
+    margin-top: 12px;
+    font-size: 12px;
+  }
+
+  .hero-contact span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hero-status {
+    flex-shrink: 0;
+  }
+
+  .status-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    backdrop-filter: blur(8px);
+  }
+
+  /* Stats Grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .stat-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+    transition: all 0.2s;
+  }
+
+  .stat-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(91, 95, 237, 0.08);
+  }
+
+  .stat-box.highlight-green {
+    background: var(--success-light);
+    border-color: #BBF7D0;
+  }
+
+  .stat-box.highlight-indigo {
+    background: var(--primary-light);
+    border-color: #C7D2FE;
+  }
+
+  .stat-val {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .stat-val.purple { color: var(--primary); }
+  .stat-val.green { color: var(--success); }
+  .stat-val.dark { color: var(--text); }
+
+  .stat-lbl {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* Layout */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 18px;
+  }
+
+  /* Timeline Panel */
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+  }
+
+  .panel-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+  }
+
+  /* Call Timeline Cards */
+  .call-card {
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+  }
+
+  .call-card.latest {
+    background: linear-gradient(135deg, #F0FDF4, #ECFDF5);
+    border-left: 4px solid var(--success);
+  }
+
+  .call-card.callback {
+    background: var(--warning-light);
+    border-left: 4px solid var(--warning);
+  }
+
+  .call-card.connected {
+    background: var(--bg-soft);
+    border-left: 4px solid var(--text-light);
+  }
+
+  .call-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .call-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .call-num.green { color: var(--success); }
+  .call-num.amber { color: #92400E; }
+  .call-num.gray { color: var(--text-muted); }
+
+  .call-time-info {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .latest-tag {
+    font-size: 10px;
+    color: var(--success);
+    padding: 3px 10px;
+    background: var(--success-light);
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  /* Audio Player */
+  .audio-player {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .audio-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .play-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--success);
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    font-size: 14px;
+  }
+
+  .play-btn:hover {
+    transform: scale(1.05);
+    background: #059669;
+  }
+
+  .waveform {
+    flex: 1;
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    height: 36px;
+  }
+
+  .wave-bar {
+    width: 2.5px;
+    background: var(--success);
+    border-radius: 1px;
+    transition: all 0.2s;
+  }
+
+  .wave-bar.played { background: var(--success); }
+  .wave-bar.unplayed { background: #D1D5DB; }
+
+  .audio-time {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+    min-width: 70px;
+    text-align: right;
+  }
+
+  /* AI Summary Box */
+  .ai-summary {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  .ai-summary-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+
+  .ai-tags {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-light);
+    flex-wrap: wrap;
+  }
+
+  .ai-tag {
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .ai-tag.green { color: var(--success); }
+  .ai-tag.indigo { color: var(--primary); }
+  .ai-tag.gray { color: var(--text-muted); }
+
+  /* TABS - Vapi-style but Light Theme */
+  .call-tabs {
+    display: flex;
+    gap: 2px;
+    border-bottom: 1px solid var(--border);
+    margin-top: 14px;
+    margin-bottom: 0;
+    overflow-x: auto;
+  }
+
+  .call-tab {
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    font-weight: 500;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    font-family: inherit;
+  }
+
+  .call-tab:hover {
+    color: var(--primary);
+  }
+
+  .call-tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+    font-weight: 600;
+  }
+
+  .tab-content {
+    padding: 16px 0 4px 0;
+    display: none;
+    animation: fadeInTab 0.3s ease-out;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  @keyframes fadeInTab {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Transcript bubbles - light theme */
+  .chat-msg {
+    margin-bottom: 14px;
+  }
+
+  .chat-msg-label {
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .chat-msg.assistant .chat-msg-label {
+    color: var(--primary);
+  }
+
+  .chat-msg.user {
+    text-align: right;
+  }
+
+  .chat-msg.user .chat-msg-label {
+    color: var(--success);
+  }
+
+  .chat-bubble {
+    display: inline-block;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 12px;
+    line-height: 1.6;
+    max-width: 85%;
+    word-wrap: break-word;
+    text-align: left;
+  }
+
+  .chat-msg.assistant .chat-bubble {
+    background: var(--primary-light);
+    color: var(--text);
+    border-bottom-left-radius: 4px;
+  }
+
+  .chat-msg.user .chat-bubble {
+    background: var(--success-light);
+    color: var(--text);
+    border-bottom-right-radius: 4px;
+  }
+
+  .chat-time {
+    font-size: 9px;
+    color: var(--text-light);
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .chat-msg.user .chat-time {
+    text-align: right;
+  }
+
+  /* Logs / Analysis / Cost / Latency tab content */
+  .tab-info-box {
+    padding: 14px;
+    background: var(--bg-soft);
+    border-radius: 10px;
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  .tab-info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .tab-info-row:last-child { border-bottom: 0; }
+
+  .tab-info-label {
+    color: var(--text-muted);
+    font-size: 11px;
+  }
+
+  .tab-info-val {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 12px;
+  }
+
+  /* Read more button */
+  .read-more-btn {
+    margin-top: 8px;
+    padding: 8px 14px;
+    background: var(--primary-light);
+    border: 1px solid #C7D2FE;
+    border-radius: 8px;
+    font-size: 11px;
+    color: var(--primary);
+    cursor: pointer;
+    font-weight: 600;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+
+  .read-more-btn:hover {
+    background: #DBEAFE;
+    border-color: var(--primary);
+  }
+
+  /* Right Sidebar */
+  .right-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .actions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .action-btn {
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+
+  .action-btn:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary);
+  }
+
+  .action-btn.primary {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+  }
+
+  .action-btn.primary:hover {
+    background: var(--primary-dark);
+    color: #fff;
+  }
+
+  .action-btn.danger {
+    background: var(--danger-light);
+    color: #991B1B;
+    border-color: #FCA5A5;
+  }
+
+  .action-btn.danger:hover {
+    background: #FECACA;
+  }
+
+  /* Trend Chart */
+  .trend-chart svg {
+    display: block;
+  }
+
+  .trend-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  .trend-summary {
+    margin-top: 10px;
+    padding: 8px;
+    background: var(--success-light);
+    border-radius: 6px;
+    font-size: 11px;
+    color: var(--success);
+    font-weight: 600;
+  }
+
+  /* AI Insights */
+  .insight-box {
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+
+  .insight-box strong {
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .insight-box.green {
+    background: var(--success-light);
+    color: #065F46;
+  }
+
+  .insight-box.green strong { color: var(--success); }
+
+  .insight-box.indigo {
+    background: var(--primary-light);
+    color: #3730A3;
+  }
+
+  .insight-box.indigo strong { color: var(--primary); }
+
+  .insight-box.amber {
+    background: var(--warning-light);
+    color: #92400E;
+  }
+
+  .insight-box.amber strong { color: #92400E; }
+
+  /* Responsive */
+  @media (max-width: 980px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .hero-row { flex-direction: column; align-items: flex-start; }
+    .hero-status { width: 100%; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .hero-contact { flex-direction: column; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="nav-back">
+    <a href="index.html" class="back-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      Back to Outreach
+    </a>
+    <div class="breadcrumb">
+      <a href="index.html">Outreach Calls</a> · Patient Detail
+    </div>
+  </div>
+
+  <!-- Hero Profile -->
+  <div class="hero">
+    <div class="hero-row">
+      <div class="hero-avatar" id="patient-avatar">LT</div>
+      <div class="hero-info">
+        <div class="hero-name display-font" id="patient-name">Liam Thompson</div>
+        <div class="hero-meta" id="patient-meta">VLC-P003 · Male, 40 · Acme Health Group</div>
+        <div class="hero-contact">
+          <span>📞 +1-555-0123</span>
+          <span>✉️ liam@acmehealth.com</span>
+          <span>🏥 Family Counseling</span>
+        </div>
+      </div>
+      <div class="hero-status">
+        <div class="status-tag">⬤ Pending Outreach</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-box">
+      <div class="stat-val purple">3</div>
+      <div class="stat-lbl">Total Calls</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val dark">5:23</div>
+      <div class="stat-lbl">Avg Duration</div>
+    </div>
+    <div class="stat-box highlight-green">
+      <div class="stat-val green">9/10</div>
+      <div class="stat-lbl">Interest Score</div>
+    </div>
+    <div class="stat-box highlight-indigo">
+      <div class="stat-val purple">$12.5K</div>
+      <div class="stat-lbl">Expected Revenue</div>
+    </div>
+  </div>
+
+  <!-- Main Grid -->
+  <div class="grid-2">
+
+    <!-- Left: Call Timeline -->
+    <div class="panel">
+      <div class="panel-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--primary)"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.58l2.2-2.21c.28-.27.36-.66.25-1.01C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+        Call Timeline
+        <span style="margin-left: auto; font-size: 11px; color: var(--text-muted); font-weight: 400;">3 calls total</span>
+      </div>
+
+      <!-- Call #3 - Latest -->
+      <div class="call-card latest">
+        <div class="call-head">
+          <div>
+            <div class="call-num green">📞 Call #3 — Connected</div>
+            <div class="call-time-info">2026-01-22 · 02:15 PM · 6:18 min</div>
+          </div>
+          <div class="latest-tag">Latest</div>
+        </div>
+
+        <div class="audio-player">
+          <div class="audio-controls">
+            <button class="play-btn" onclick="togglePlay(this)">▶</button>
+            <div class="waveform" id="waveform-1"></div>
+            <div class="audio-time">3:24 / 6:18</div>
+          </div>
+        </div>
+
+        <div class="call-tabs">
+          <button class="call-tab active" onclick="switchTab(this, 'tab3-transcript')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+            Transcripts
+          </button>
+          <button class="call-tab" onclick="switchTab(this, 'tab3-summary')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+            Summary
+          </button>
+          <button class="call-tab" onclick="switchTab(this, 'tab3-logs')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
+            Logs
+          </button>
+          <button class="call-tab" onclick="switchTab(this, 'tab3-cost')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+            Cost
+          </button>
+          <button class="call-tab" onclick="switchTab(this, 'tab3-latency')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+            Latency
+          </button>
+        </div>
+
+        <div class="tab-content active" id="tab3-transcript">
+          <div class="chat-msg assistant">
+            <div class="chat-msg-label">Sarah (AI)</div>
+            <div class="chat-bubble">Hi. This is Sarah calling from Valiant LifeCare. Could I speak with Liam, please?</div>
+            <div class="chat-time">3:38:26 PM (+00:00.54)</div>
+          </div>
+
+          <div class="chat-msg user">
+            <div class="chat-msg-label">Liam</div>
+            <div class="chat-bubble">Yes. Liam speaking.</div>
+            <div class="chat-time">3:38:31 PM (+00:05.35)</div>
+          </div>
+
+          <div class="chat-msg assistant">
+            <div class="chat-msg-label">Sarah (AI)</div>
+            <div class="chat-bubble">Thank you, Liam. I'll be brief. I work with healthcare practices on revenue cycle management. Denied claims, slow AR, and coding gaps. Can I ask one quick question?</div>
+            <div class="chat-time">3:38:33 PM (+00:07.63)</div>
+          </div>
+
+          <div class="chat-msg user">
+            <div class="chat-msg-label">Liam</div>
+            <div class="chat-bubble">Sure. What is this about?</div>
+            <div class="chat-time">3:38:45 PM (+00:19.63)</div>
+          </div>
+
+          <div class="chat-msg assistant">
+            <div class="chat-msg-label">Sarah (AI)</div>
+            <div class="chat-bubble">I wanted to understand how do you currently handle billing at Acme Health Group? Is it in-house or outsourced?</div>
+            <div class="chat-time">3:38:48 PM (+00:22.19)</div>
+          </div>
+
+          <button class="read-more-btn">Read Full Transcript →</button>
+        </div>
+
+        <div class="tab-content" id="tab3-summary">
+          <div class="tab-info-box" style="line-height: 1.7;">
+            Patient confirmed appointment for January 25th at 3 PM. Showed strong interest in revenue cycle audit services. Mentioned current pain points with denied claims management. Asked detailed questions about HIPAA compliance and ROI timelines.
+          </div>
+          <div style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <span style="padding: 6px 12px; background: var(--success-light); color: var(--success); border-radius: 20px; font-size: 11px; font-weight: 600;">💚 Sentiment: Very Positive</span>
+            <span style="padding: 6px 12px; background: var(--primary-light); color: var(--primary); border-radius: 20px; font-size: 11px; font-weight: 600;">⭐ Interest: 9/10</span>
+            <span style="padding: 6px 12px; background: var(--bg-soft); color: var(--text); border-radius: 20px; font-size: 11px; font-weight: 600;">💰 Revenue: $12.5K</span>
+          </div>
+        </div>
+
+        <div class="tab-content" id="tab3-logs">
+          <div class="tab-info-box">
+            <div class="tab-info-row">
+              <span class="tab-info-label">Call ID</span>
+              <span class="tab-info-val" style="font-family: monospace;">019dc942-c35e</span>
+            </div>
+            <div class="tab-info-row">
+              <span class="tab-info-label">Status</span>
+              <span class="tab-info-val" style="color: var(--success);">● Ended Successfully</span>
+            </div>
+            <div class="tab-info-row">
+              <span class="tab-info-label">Ended Reason</span>
+              <span class="tab-info-val">Customer Ended Call</span>
+            </div>
+            <div class="tab-info-row">
+              <span class="tab-info-label">Phone Number</span>
+              <span class="tab-info-val">+1 (555) 0123</span>
+            </div>
+            <div class="tab-info-row">
+              <span class="tab-info-label">Provider</span>
+              <span class="tab-info-val">Twilio · Vapi</span>
+            </div>
+            <div class="tab-info-row">
+              <span class="tab-info-label">Recording URL</span>
+              <span class="tab-info-val" style="color: var(--primary); cursor: pointer;">↓ Download MP3</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="tab3-cost">
+          <div class="tab-info-box">
+            <div class="tab-info-row">
+              <span class="tab-info-label">Total Cost</span>
+              <span class="tab-info-val" style="color: var(--primary); font-size: 16px;">$0.48</span>
+            </div>
+            <div class="tab-info-row">
+              <span class="tab-info-label">LLM (Llama 4)</span>
+              <span class="tab-info-val">$0.12</span>
+            </div>
+            <div class="tab-info-row">
+              <span class="tab-info-label">Voice (ElevenLabs)</span>
+              <span class="tab-info-val">$0.18</span>
+            </div>
+            <div class="tab-info-row">
+              <span class="tab-info-label">Transport (Twilio)</span>
+              <span class="tab-info-val">$0.10</span>
+            </div>
+            <div class="tab-info-row">
+              <span class="tab-info-label">Vapi Platform</span>
+              <span class="tab-info-val">$0.08</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="tab3-latency">
+          <div class="tab-info-box">
+            <div class="tab-info-row">
+              <span class="tab-info-label">Avg Response Time</span>
+              <span class="tab-info-val" style="color: var(--success);">2.1s</span>
+            </div>
+            <div class="tab-info-row">
+              <span class="tab-info-label">LLM Latency</span>
+              <span class="tab-info-val">800ms</span>
+            </div>
+            <div class="tab-info-row">
+              <span class="tab-info-label">Voice Synthesis</span>
+              <span class="tab-info-val">450ms</span>
+            </div>
+            <div class="tab-info-row">
+              <span class="tab-info-label">Network</span>
+              <span class="tab-info-val">120ms</span>
+            </div>
+            <div class="tab-info-row">
+              <span class="tab-info-label">First Word Latency</span>
+              <span class="tab-info-val" style="color: var(--success);">1.4s</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Call #2 -->
+      <div class="call-card callback">
+        <div class="call-head">
+          <div>
+            <div class="call-num amber">📞 Call #2 — Callback Requested</div>
+            <div class="call-time-info">2026-01-20 · 04:30 PM · 4:32 min</div>
+          </div>
+        </div>
+        <div class="call-tabs">
+          <button class="call-tab active" onclick="switchTab(this, 'tab2-transcript')">Transcripts</button>
+          <button class="call-tab" onclick="switchTab(this, 'tab2-summary')">Summary</button>
+        </div>
+        <div class="tab-content active" id="tab2-transcript">
+          <div class="chat-msg assistant">
+            <div class="chat-msg-label">Sarah (AI)</div>
+            <div class="chat-bubble">Hi Liam, this is Sarah from Valiant LifeCare. Following up on our previous call.</div>
+            <div class="chat-time">4:30:12 PM</div>
+          </div>
+          <div class="chat-msg user">
+            <div class="chat-msg-label">Liam</div>
+            <div class="chat-bubble">Sorry, I'm in a meeting. Can you call me back at 2 PM tomorrow?</div>
+            <div class="chat-time">4:30:24 PM</div>
+          </div>
+          <div class="chat-msg assistant">
+            <div class="chat-msg-label">Sarah (AI)</div>
+            <div class="chat-bubble">Absolutely. I'll call you tomorrow at 2 PM. Have a great day!</div>
+            <div class="chat-time">4:30:32 PM</div>
+          </div>
+        </div>
+        <div class="tab-content" id="tab2-summary">
+          <div class="tab-info-box" style="line-height: 1.7;">
+            Patient showed interest in services but was in a meeting. Requested callback at 02:00 PM same day. Discussed RCM benefits briefly. Indicated decision-maker authority but needs to consult with partner.
+          </div>
+          <div style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <span style="padding: 6px 12px; background: var(--primary-light); color: var(--primary); border-radius: 20px; font-size: 11px; font-weight: 600;">⭐ Interest: 7/10</span>
+            <span style="padding: 6px 12px; background: var(--bg-soft); color: var(--text); border-radius: 20px; font-size: 11px; font-weight: 600;">⏱️ Callback: Next day 2 PM</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Call #1 -->
+      <div class="call-card connected">
+        <div class="call-head">
+          <div>
+            <div class="call-num gray">📞 Call #1 — Connected</div>
+            <div class="call-time-info">2026-01-15 · 10:00 AM · 3:21 min</div>
+          </div>
+        </div>
+        <div class="call-tabs">
+          <button class="call-tab active" onclick="switchTab(this, 'tab1-transcript')">Transcripts</button>
+          <button class="call-tab" onclick="switchTab(this, 'tab1-summary')">Summary</button>
+        </div>
+        <div class="tab-content active" id="tab1-transcript">
+          <div class="chat-msg assistant">
+            <div class="chat-msg-label">Sarah (AI)</div>
+            <div class="chat-bubble">Hi, may I speak with Liam Thompson please?</div>
+            <div class="chat-time">10:00:08 AM</div>
+          </div>
+          <div class="chat-msg user">
+            <div class="chat-msg-label">Liam</div>
+            <div class="chat-bubble">Yes, this is Liam.</div>
+            <div class="chat-time">10:00:14 AM</div>
+          </div>
+          <div class="chat-msg assistant">
+            <div class="chat-msg-label">Sarah (AI)</div>
+            <div class="chat-bubble">I'm calling from Valiant LifeCare. We help healthcare practices recover lost revenue from denied claims. Could I send you some information by email?</div>
+            <div class="chat-time">10:00:18 AM</div>
+          </div>
+          <div class="chat-msg user">
+            <div class="chat-msg-label">Liam</div>
+            <div class="chat-bubble">Sure, send me the materials. My email is liam@acmehealth.com</div>
+            <div class="chat-time">10:00:35 AM</div>
+          </div>
+        </div>
+        <div class="tab-content" id="tab1-summary">
+          <div class="tab-info-box" style="line-height: 1.7;">
+            Initial introduction call. Patient interested in learning more about RCM services. Brief overview given. Patient asked to receive informational materials via email. Materials sent successfully.
+          </div>
+          <div style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <span style="padding: 6px 12px; background: var(--primary-light); color: var(--primary); border-radius: 20px; font-size: 11px; font-weight: 600;">⭐ Interest: 5/10</span>
+            <span style="padding: 6px 12px; background: var(--bg-soft); color: var(--text); border-radius: 20px; font-size: 11px; font-weight: 600;">📧 Materials sent</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right: Sidebar -->
+    <div class="right-sidebar">
+
+      <div class="panel">
+        <div class="panel-title">⚡ Quick Actions</div>
+        <div class="actions-list">
+          <button class="action-btn primary">📞 Call Now</button>
+          <button class="action-btn">✉️ Send Email</button>
+          <button class="action-btn">📅 Schedule Callback</button>
+          <button class="action-btn danger">🚫 Mark DNC</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">📊 Engagement Trend</div>
+        <div class="trend-chart">
+          <svg width="100%" height="80" viewBox="0 0 240 80" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="grad" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stop-color="#5B5FED" stop-opacity="0.3"/>
+                <stop offset="1" stop-color="#5B5FED" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M 0 60 L 40 50 L 80 55 L 120 35 L 160 25 L 200 15 L 240 10 L 240 80 L 0 80 Z" fill="url(#grad)"/>
+            <path d="M 0 60 L 40 50 L 80 55 L 120 35 L 160 25 L 200 15 L 240 10" stroke="#5B5FED" stroke-width="2" fill="none"/>
+            <circle cx="240" cy="10" r="4" fill="#5B5FED"/>
+          </svg>
+          <div class="trend-info">
+            <span>Jan 15</span>
+            <span>Jan 20</span>
+            <span>Jan 25</span>
+          </div>
+          <div class="trend-summary">↗ Engagement up 67% over 3 calls</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">🤖 AI Insights</div>
+        <div class="insight-box green">
+          <strong>✓ Best time to call</strong>
+          Mon-Wed, 2-4 PM EST<br>(83% answer rate)
+        </div>
+        <div class="insight-box indigo">
+          <strong>💡 Talking point</strong>
+          Mentioned denied claims pain — emphasize 95% first-pass accuracy
+        </div>
+        <div class="insight-box amber">
+          <strong>⚠️ Caution</strong>
+          Decision-maker may need partner approval before final commitment
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Read URL params for patient ID
+  const params = new URLSearchParams(window.location.search);
+  const patientId = params.get('id') || 'VLC-P003';
+
+  // Patient data map
+  const patients = {
+    'VLC-P001': { name: 'Olivia Martinez', meta: 'VLC-P001 · Female, 32 · Acme Health Group', initials: 'OM' },
+    'VLC-P002': { name: 'Samantha Brown', meta: 'VLC-P002 · Female, 28 · MedGroup Inc', initials: 'SB' },
+    'VLC-P003': { name: 'Liam Thompson', meta: 'VLC-P003 · Male, 40 · Acme Health Group', initials: 'LT' },
+    'VLC-P004': { name: 'Javier Davidson', meta: 'VLC-P004 · Male, 34 · CarePlus Hospital', initials: 'JD' },
+    'VLC-P005': { name: 'Amanda Richards', meta: 'VLC-P005 · Female, 25 · HealthCo Network', initials: 'AR' },
+    'VLC-P006': { name: 'Anna Williams', meta: 'VLC-P006 · Female, 45 · CareGroup', initials: 'AW' }
+  };
+
+  if (patients[patientId]) {
+    document.getElementById('patient-name').textContent = patients[patientId].name;
+    document.getElementById('patient-meta').textContent = patients[patientId].meta;
+    document.getElementById('patient-avatar').textContent = patients[patientId].initials;
+  }
+
+  // ============ WAVEFORM GENERATION ============
+  function generateWaveform(containerId, playedRatio) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const heights = [
+      8, 14, 20, 12, 22, 16, 24, 10, 18, 14,
+      22, 9, 17, 25, 13, 20, 11, 19, 23, 8,
+      16, 21, 10, 15, 24, 12, 18, 14, 22, 9,
+      17, 25, 13, 20, 11, 19, 23, 8, 16, 21,
+      14, 18, 22, 10, 16, 25, 12, 19, 14, 21
+    ];
+
+    heights.forEach((h, idx) => {
+      const bar = document.createElement('div');
+      bar.className = 'wave-bar';
+      bar.style.height = h + 'px';
+      bar.style.background = idx / heights.length < playedRatio ? '#10B981' : '#D1D5DB';
+      container.appendChild(bar);
+    });
+  }
+
+  generateWaveform('waveform-1', 0.55);
+
+  // ============ AUDIO PLAYBACK SIMULATION ============
+  function togglePlay(btn) {
+    const isPlaying = btn.textContent === '⏸';
+    btn.textContent = isPlaying ? '▶' : '⏸';
+
+    if (!isPlaying) {
+      btn.style.background = '#059669';
+    } else {
+      btn.style.background = '#10B981';
+    }
+  }
+
+  // ============ TAB SWITCHING ============
+  function switchTab(btn, tabId) {
+    // Find parent call-card
+    const callCard = btn.closest('.call-card');
+    // Remove active from all tabs in this card
+    callCard.querySelectorAll('.call-tab').forEach(t => t.classList.remove('active'));
+    callCard.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    // Activate clicked tab
+    btn.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+  }
+</script>
+
+</body>
+</html>
